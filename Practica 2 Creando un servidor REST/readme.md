@@ -24,3 +24,6 @@
 
 
 #### IV. Los verbos HTTP
+
+![Raspbian en VirtualBox](others/images/verbosHTTP1.png) 
+![Raspbian en VirtualBox](others/images/verbosHTTP2.png) 
