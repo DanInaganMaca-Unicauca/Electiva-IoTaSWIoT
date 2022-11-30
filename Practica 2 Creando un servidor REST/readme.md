@@ -27,3 +27,10 @@
 
 ![Raspbian en VirtualBox](others/images/verbosHTTP1.png) 
 ![Raspbian en VirtualBox](others/images/verbosHTTP2.png) 
+![Raspbian en VirtualBox](others/images/verbosHTTP3.png) 
+![Raspbian en VirtualBox](others/images/verbosHTTP4.png) 
+![Raspbian en VirtualBox](others/images/verbosHTTP5.png) 
+![Raspbian en VirtualBox](others/images/verbosHTTP6.png) 
+![Raspbian en VirtualBox](others/images/verbosHTTP7.png) 
+![Raspbian en VirtualBox](others/images/verbosHTTP8.png) 
+![Raspbian en VirtualBox](others/images/verbosHTTP9.png) 
