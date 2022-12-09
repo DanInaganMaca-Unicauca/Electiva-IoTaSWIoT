@@ -1,7 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common'; 
+//import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common'; 
+import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put, UseGuards } from '@nestjs/common'; 
 
-import {Player} from '../../domain/models/player.model'; 
+import { Player } from '../../domain/models/player.model'; 
 import { PlayerService } from '../../domain/services/player.service'; 
+
+// import { PlayerController } from './players.controller'; <---- SOLID 
+import { AuthGuard } from '@nestjs/passport'; 
+// import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'; JWT 
 
 const errReturn = (e: Error, message: string) => {
   return {
@@ -31,11 +36,27 @@ export class PlayerController {
    /**
     * Crea un jugador
     * @param datos Objeto con datos de jugador
+    * 
+    * Autentification: 
+    *   curl -X POST http://localhost:3000 -H "Content-Type: application/json" -d '{"username": "user0", "password": "password0", "name": "Mónica","lastName": "Inagán","age": 19,"team": "Colombia"}' 
+    *   curl -X POST http://raspberry:3000/ -H "Content-Type: application/json" -d '{"name": "Mónica","lastName": "Inagán","age": 19,"team": "Colombia"}' --user "user0:password0" 
+    * curl -X POST http://raspberry:3000/ 
+        -H "Content-Type: application/json" 
+        -d '{
+                "name": "Mónica",
+                "lastName": "Inagán",
+                "age": 19,
+                "team": "Colombia"
+            }' 
+        --user "user0:password0" 
+    * 
     */
+  @UseGuards(AuthGuard('local')) // End points protegidos 
   @Post() 
   create(@Body() data: Player) { 
     try{ 
-      return this.playerService.create(data); 
+      return this.playerService.create(data);
+      //return "\n"+this.playerService.create(data).toString()+"\n\n"; 
     } 
     catch(e) { 
       return errReturn(e, "Error User create"); 

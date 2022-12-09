@@ -11,13 +11,13 @@ export class UsersService {
    private readonly users: User[] = [
       {
          userId: 1,
-         username: 'john',
-         password: 'changeme',
+         username: 'user0',
+         password: 'password0',
       },
       {
          userId: 2,
-         username: 'maria',
-         password: 'guess',
+         username: 'user1',
+         password: 'password1',
       }
    ];
 
