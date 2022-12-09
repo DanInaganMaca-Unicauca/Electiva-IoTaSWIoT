@@ -7,9 +7,11 @@ import { PlayerService } from './players/domain/services/player.service';
 
 /*import { PlayerController_D } from './players/adapters/controllers/players_D.controller';  
 import { PlayerService_D } from './players/domain/services/player_D.service'; */
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [],
+  imports: [AuthModule, UsersModule],
   controllers: [PlayerController],
   providers: [PlayerService], 
   /*controllers: [PlayerController_D],
