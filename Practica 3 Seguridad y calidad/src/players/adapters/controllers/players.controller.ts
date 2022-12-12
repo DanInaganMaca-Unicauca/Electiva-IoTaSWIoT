@@ -70,6 +70,7 @@ export class PlayerController {
     * @param data Objeto con datos de jugador
     * @param index Identificador único del jugador
     */
+  @UseGuards(JwtAuthGuard) // Se adiciona esta anotación para proteger el endpoint con JWT 
   @Put(":index") 
   modify(@Body() data: Player, @Param('index') index: number) { 
     try { 
@@ -84,6 +85,7 @@ export class PlayerController {
     * Elimina un jugador
     * @param index Identificador único del jugador
     */
+  @UseGuards(JwtAuthGuard) // Se adiciona esta anotación para proteger el endpoint con JWT 
   @Delete(":index") 
   delete(@Param('index') index: number) { 
     try { 
@@ -99,6 +101,7 @@ export class PlayerController {
     * @param index Identificador único del jugador
     * @param age Edad del jugador
     */
+  @UseGuards(JwtAuthGuard) // Se adiciona esta anotación para proteger el endpoint con JWT 
   @Patch(":index/age/:age") 
   updatePlayerAge(@Param('index') index: number, @Param('age') age: number) { 
     try { 
