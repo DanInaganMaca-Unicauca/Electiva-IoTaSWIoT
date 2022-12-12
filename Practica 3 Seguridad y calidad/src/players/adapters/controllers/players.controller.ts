@@ -1,12 +1,13 @@
 //import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common'; 
 import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put, UseGuards } from '@nestjs/common'; 
 
+
 import { Player } from '../../domain/models/player.model'; 
 import { PlayerService } from '../../domain/services/player.service'; 
 
 // import { PlayerController } from './players.controller'; <---- SOLID 
-import { AuthGuard } from '@nestjs/passport'; 
-// import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'; JWT 
+import { AuthGuard } from '@nestjs/passport'; // Autentication 
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'; // JWT 
 
 const errReturn = (e: Error, message: string) => {
   return {
@@ -51,7 +52,8 @@ export class PlayerController {
         --user "user0:password0" 
     * 
     */
-  @UseGuards(AuthGuard('local')) // End points protegidos 
+  //@UseGuards(AuthGuard('local')) // End points protegidos con Autentificacion 
+  @UseGuards(JwtAuthGuard) // Se adiciona esta anotación para proteger el endpoint con JWT 
   @Post() 
   create(@Body() data: Player) { 
     try{ 
