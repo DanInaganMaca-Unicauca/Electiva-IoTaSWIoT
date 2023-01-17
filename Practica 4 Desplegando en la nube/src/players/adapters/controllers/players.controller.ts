@@ -3,23 +3,27 @@ import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put, UseGuar
 
 
 import { Player } from '../../domain/models/player.model'; 
-import { PlayerService } from '../../domain/services/player.service'; 
-
+import { PlayerService_Implementation } from '../../domain/services/player_Implementation.service';  
 // import { PlayerController } from './players.controller'; <---- SOLID 
+
 import { AuthGuard } from '@nestjs/passport'; // Autentication 
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'; // JWT 
+
+import { PlayerEntity } from 'src/players/domain/entities/players.entity'; 
 
 const errReturn = (e: Error, message: string) => {
   return {
      message: message,
      error: e
-  }
-}
+  }; 
+};
 
 @Controller() 
 export class PlayerController {
   // Constructor 
-  constructor(private readonly playerService: PlayerService) {  } 
+  constructor( 
+    @Inject('PlayerService') private readonly playerService: PlayerService_Implementation,
+  ) {  } 
 
    /**
     *  Retorna la lista de jugadores
@@ -55,7 +59,7 @@ export class PlayerController {
   //@UseGuards(AuthGuard('local')) // End points protegidos con Autentificacion 
   @UseGuards(JwtAuthGuard) // Se adiciona esta anotación para proteger el endpoint con JWT 
   @Post() 
-  create(@Body() data: Player) { 
+  create(@Body() data: PlayerEntity) { 
     try{ 
       return this.playerService.create(data);
       //return "\n"+this.playerService.create(data).toString()+"\n\n"; 
@@ -72,7 +76,7 @@ export class PlayerController {
     */
   @UseGuards(JwtAuthGuard) // Se adiciona esta anotación para proteger el endpoint con JWT 
   @Put(":index") 
-  modify(@Body() data: Player, @Param('index') index: number) { 
+  modify(@Body() data: PlayerEntity, @Param('index') index: string) { 
     try { 
       return this.playerService.modify(index, data); 
     } 
@@ -87,7 +91,7 @@ export class PlayerController {
     */
   @UseGuards(JwtAuthGuard) // Se adiciona esta anotación para proteger el endpoint con JWT 
   @Delete(":index") 
-  delete(@Param('index') index: number) { 
+  delete(@Param('index') index: string) { 
     try { 
       return this.playerService.delete(index); 
     } 
@@ -101,7 +105,7 @@ export class PlayerController {
     * @param index Identificador único del jugador
     * @param age Edad del jugador
     */
-  @UseGuards(JwtAuthGuard) // Se adiciona esta anotación para proteger el endpoint con JWT 
+/*  @UseGuards(JwtAuthGuard) // Se adiciona esta anotación para proteger el endpoint con JWT 
   @Patch(":index/age/:age") 
   updatePlayerAge(@Param('index') index: number, @Param('age') age: number) { 
     try { 
@@ -110,6 +114,6 @@ export class PlayerController {
     catch(e) { 
       return errReturn(e, "Error Player updatePlayerAge"); 
     }
-  };
+  };*/
 
 }

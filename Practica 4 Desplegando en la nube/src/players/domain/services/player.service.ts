@@ -1,80 +1,38 @@
-import { Injectable } from '@nestjs/common';
-import { Player } from "../models/player.model"; // Importamos el modelo de jugador 
+import { InsertResult, UpdateResult } from 'typeorm';
+import { PlayerEntity } from '../entities/players.entity'; 
 
+export interface PlayerService {
+  /**
+   * Retorna la lista de jugadores registrados
+   */
+  list(): Promise<PlayerEntity[]>;
 
-@Injectable()
-export class  PlayerService {
+  /**
+   * Crea un nuevo jugador
+   * @param player datos del nuevo jugador
+   * @return Resultado del proceso
+   */
+  create(player: PlayerEntity): Promise<InsertResult>;
 
-  private player: Player[] = [ // Como no hay base de datos aun empleamos una variable en memoria:
-    {
-      name: 'Leo',
-      lastName: 'Messi',
-      age: 35,
-      team: 'Argentina'
-    },  
-    {
-      name: 'Cristiano',
-      lastName: 'Ronaldo',
-      age: 37,
-      team: 'Portugal'
-    }
-  ]; 
+  /**
+   * Actualiza datos de jugador
+   * @param id Identificador único del jugador
+   * @param player datos del jugador
+   * @return Jugador modificado
+   */
+  modify(id: string, playerData: PlayerEntity): Promise<UpdateResult>;
 
-   /**
-    * Retorna la lista de jugadores registrados
-    */
+  /**
+   * Eliminar un jugador
+   * @param id Identificador único del jugador
+   * @return True si eliminó al jugador
+   */
+  delete(id: string): Promise<boolean>;
 
-  public list(): Player[] {
-    return this.player
-  }; 
-
-   /**
-    * Crea un nuevo jugador
-    * @param player datos del nuevo jugador
-    * @return Nuevo jugador
-    */
-
-  public create(player: Player): Player {
-    this.player.push(player); 
-    return player; 
-  };
-
-   /**
-    * Actualiza datos de jugador
-    * @param index Identificador único del jugador
-    * @param player datos del jugador
-    * @return Jugador modificado
-    */
-
-  public modify(index: number, player: Player): Player { 
-    this.player[index] = player; 
-    return this.player[index]; 
-  }; 
-
-   /**
-    * Eliminar un jugador
-    * @param index Identificador único del jugador
-    * @return True si eliminó al jugador
-    */
-
-  public delete(indexI: number): boolean { 
-    const previousNumberPlayers = this.player.length; 
-    this.player = this.player.filter((val, index) => index != indexI);
-    if(previousNumberPlayers == this.player.length){ 
-      return false; 
-   } 
-   else{ 
-      return true;
-   } 
-  }; 
-
-   /**
-    * Cambia la edad de un jugador
-    * @param index Identificador único del jugador
-    * @param age nuevo valor de edad 
-    */
-  public updatePlayerAge(index: number, age: number): Player { 
-    this.player[index].age = age; 
-    return this.player[index]; 
-  }; 
+  /**
+   * Cambia la edad de un jugador
+   * @param id Identificador único del jugador
+   * @param age nuevo valor de edad
+   */
+  // updateAge(id: number, edad: number): Promise<UpdateResult>;
 }
